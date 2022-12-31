@@ -38,8 +38,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Google Office Locations'),
-          backgroundColor: Colors.green[700],
+          title: const Text('MyUmmah'),
+          backgroundColor: Color.fromARGB(255, 121, 13, 13),
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
