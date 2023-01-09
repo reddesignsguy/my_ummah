@@ -171,7 +171,7 @@ Widget categoryWidget(IconData icon, String text, BuildContext context) {
           children: [
             Icon(icon),
             FittedBox(
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.fitWidth,
               child: Text(text),
             ),
           ],
@@ -211,6 +211,7 @@ class _MyWidgetState extends State<MapPage> {
   Widget build(BuildContext context) {
     return GoogleMap(
         onMapCreated: _onMapCreated,
+        markers: _markers.values.toSet(),
         initialCameraPosition: const CameraPosition(
           target: LatLng(0, 0),
           zoom: 2,
