@@ -165,8 +165,7 @@ Widget categoryWidget(IconData icon, String text, BuildContext context) {
       );
     },
     child: Container(
-        color: Colors.red,
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
             Icon(icon),
