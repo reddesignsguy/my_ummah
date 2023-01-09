@@ -209,36 +209,22 @@ class _MyWidgetState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-        onMapCreated: _onMapCreated,
-        markers: _markers.values.toSet(),
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(0, 0),
-          zoom: 2,
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('MyUmmah'),
+        backgroundColor: Colors.green[700],
+      ),
+      body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          markers: _markers.values.toSet(),
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(0, 0),
+            zoom: 2,
+          )),
+    );
   }
 }
-
-// class SecondRoute extends StatelessWidget {
-//   const SecondRoute({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Second Route'),
-//       ),
-//       body: Center(
-//         child: ElevatedButton(
-//           onPressed: () {
-//             // Navigate back to first route when tapped.
-//           },
-//           child: const Text('Go back!'),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 // await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
