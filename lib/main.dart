@@ -48,7 +48,6 @@ class _MyAppState extends State<MyApp> {
 }
 
 // Stateful home page
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
