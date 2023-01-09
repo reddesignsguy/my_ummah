@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "369580567004",
+    "project_id": "platinum-trees-373300",
+    "storage_bucket": "platinum-trees-373300.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369580567004:android:e757904aabb46bfe278719",
+        "android_client_info": {
+          "package_name": "com.example.my_ummah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369580567004-kno4k2vo2pkiuaktahp0pa2rs6u1b7bm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc_4QEp0dex2XN1NbV-q4-ziIyxVm9y84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369580567004-kno4k2vo2pkiuaktahp0pa2rs6u1b7bm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

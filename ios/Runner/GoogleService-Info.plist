@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>369580567004-4n09j0lk20pq6q28kvd6c6m9rhia660i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.369580567004-4n09j0lk20pq6q28kvd6c6m9rhia660i</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCODl7lnpJ2KAl012vypsd16uUK1V-aQ1A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>369580567004</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.myUmmah</string>
+	<key>PROJECT_ID</key>
+	<string>platinum-trees-373300</string>
+	<key>STORAGE_BUCKET</key>
+	<string>platinum-trees-373300.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:369580567004:ios:57ce436a8e170fb4278719</string>
+</dict>
+</plist>

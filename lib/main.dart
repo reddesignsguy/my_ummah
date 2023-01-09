@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'locations.dart' as locations;
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() {
   runApp(const MyApp());
@@ -139,11 +141,11 @@ class CategoriesSection extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisCount: 4,
       children: [
-        categoryWidget(Icons.mosque, "Masjids"),
-        categoryWidget(Icons.restaurant, "Restaurants"),
-        categoryWidget(Icons.medical_services, "Doctors"),
-        categoryWidget(Icons.store, "Stores"),
-        categoryWidget(Icons.people, "All"),
+        categoryWidget(Icons.mosque, "Masjids", context),
+        categoryWidget(Icons.restaurant, "Restaurants", context),
+        categoryWidget(Icons.medical_services, "Doctors", context),
+        categoryWidget(Icons.store, "Stores", context),
+        categoryWidget(Icons.people, "All", context),
       ],
     );
   }
@@ -151,19 +153,30 @@ class CategoriesSection extends StatelessWidget {
 
 // Stateless category widget
 
-Widget categoryWidget(IconData icon, String text) {
-  return Container(
-      color: Colors.red,
-      padding: const EdgeInsets.all(5),
-      child: Column(
-        children: [
-          Icon(icon),
-          FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(text),
-          ),
-        ],
-      ));
+Widget categoryWidget(IconData icon, String text, BuildContext context) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      primary: Colors.red,
+    ),
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MapPage()),
+      );
+    },
+    child: Container(
+        color: Colors.red,
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          children: [
+            Icon(icon),
+            FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Text(text),
+            ),
+          ],
+        )),
+  );
 }
 
 // Stateful map page
@@ -204,3 +217,28 @@ class _MyWidgetState extends State<MapPage> {
         ));
   }
 }
+
+// class SecondRoute extends StatelessWidget {
+//   const SecondRoute({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Second Route'),
+//       ),
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () {
+//             // Navigate back to first route when tapped.
+//           },
+//           child: const Text('Go back!'),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+// );
