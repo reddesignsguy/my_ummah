@@ -16,18 +16,13 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Search'),
+        backgroundColor: Colors.green[700],
+      ),
       body: Column(
         children: [
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: const Icon(Icons.arrow_back))),
           Autocomplete<String>(
             optionsBuilder: ((textEditingValue) {
               if (textEditingValue.text == "") {
@@ -39,6 +34,7 @@ class _SearchPageState extends State<SearchPage> {
               });
             }),
             onSelected: (item) {
+              // ignore: avoid_print
               print('The $item was selected!');
             },
           ),
