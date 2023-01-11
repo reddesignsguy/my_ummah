@@ -18,7 +18,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -26,7 +29,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -44,18 +50,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  //static const FirebaseOptions web = FirebaseOptions(googleAppID: 'Ummah2U');
-  static const FirebaseOptions web = FirebaseOptions(
-    googleAppID: 'Ummah2U',
-    apiKey: 'AIzaSyBkSmy-QRZ5a8H1OHtntJ8ON_vlRsakSrE',
-    // appId: '1:369580567004:web:7b71fc02b5d214c3278719',
-    // messagingSenderId: '369580567004',
-    // projectId: 'platinum-trees-373300',
-    // authDomain: 'platinum-trees-373300.firebaseapp.com',
-    storageBucket: 'platinum-trees-373300.appspot.com',
-    // measurementId: 'G-C97M7EVWGZ',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     googleAppID: 'Ummah2U',
     apiKey: 'AIzaSyDc_4QEp0dex2XN1NbV-q4-ziIyxVm9y84',
@@ -66,18 +60,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    googleAppID: 'Ummah2U',
-    apiKey: 'AIzaSyCODl7lnpJ2KAl012vypsd16uUK1V-aQ1A',
-    // appId: '1:369580567004:ios:57ce436a8e170fb4278719',
-    // messagingSenderId: '369580567004',
-    // projectId: 'platinum-trees-373300',
-    storageBucket: 'platinum-trees-373300.appspot.com',
-    // iosClientId:
-    //     '369580567004-4n09j0lk20pq6q28kvd6c6m9rhia660i.apps.googleusercontent.com',
-    // iosBundleId: 'com.example.myUmmah',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
     googleAppID: 'Ummah2U',
     apiKey: 'AIzaSyCODl7lnpJ2KAl012vypsd16uUK1V-aQ1A',
     // appId: '1:369580567004:ios:57ce436a8e170fb4278719',

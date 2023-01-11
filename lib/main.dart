@@ -162,12 +162,12 @@ class CategoriesSection extends StatelessWidget {
 Widget categoryWidget(IconData icon, String text, BuildContext context) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      primary: Colors.red,
+      primary: Colors.green,
     ),
     onPressed: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MapPage()),
+        MaterialPageRoute(builder: (context) => MapPage(filter: text)),
       );
     },
     child: Container(
@@ -186,13 +186,16 @@ Widget categoryWidget(IconData icon, String text, BuildContext context) {
 
 // Stateful map page
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({super.key, required this.filter});
+  final String filter;
 
   @override
-  State<MapPage> createState() => _MyWidgetState();
+  State<MapPage> createState() => _MyWidgetState(filter: filter);
 }
 
 class _MyWidgetState extends State<MapPage> {
+  _MyWidgetState({required this.filter});
+  final String filter;
   final Map<String, Marker> _markers = {};
   String search = "";
 
@@ -219,7 +222,7 @@ class _MyWidgetState extends State<MapPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('MyUmmah'),
+        title: Text(filter),
         backgroundColor: Colors.green[700],
       ),
       body: GoogleMap(
