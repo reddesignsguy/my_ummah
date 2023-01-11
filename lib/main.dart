@@ -106,7 +106,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const ListTile(
+      child: ListTile(
         title: TextField(
           decoration: InputDecoration(
             hintText: 'Try "halal food" or "most popular"',
@@ -120,6 +120,12 @@ class SearchBar extends StatelessWidget {
           style: TextStyle(
             color: Color.fromARGB(255, 0, 0, 0),
           ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchPage()),
+            );
+          },
         ),
       ),
     );
@@ -188,6 +194,8 @@ class MapPage extends StatefulWidget {
 
 class _MyWidgetState extends State<MapPage> {
   final Map<String, Marker> _markers = {};
+  String search = "";
+
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
     setState(() {
@@ -228,3 +236,54 @@ class _MyWidgetState extends State<MapPage> {
 // await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
 // );
+
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  List<String> listItems = [
+    "Alice",
+    "Bob",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Icon(Icons.arrow_back))),
+          Container(
+            child: Autocomplete<String>(
+              optionsBuilder: ((textEditingValue) {
+                if (textEditingValue.text == "") {
+                  return const Iterable<String>.empty();
+                }
+
+                return listItems.where((item) {
+                  return item.contains(textEditingValue.text.toLowerCase());
+                });
+              }),
+              onSelected: (item) {
+                print('The $item was selected!');
+              },
+            ),
+          ),
+          Text("Placeholder"),
+        ],
+      ),
+    );
+  }
+}
