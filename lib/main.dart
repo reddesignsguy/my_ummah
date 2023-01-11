@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:carousel_pro/carousel_pro.dart';
 import 'map.dart' as maps;
+import 'searchPage.dart' as search;
 //import 'package:firebase_core/firebase_core.dart';
 //import 'firebase_options.dart';
 
@@ -102,28 +103,26 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListTile(
-        title: TextField(
-          decoration: InputDecoration(
-            hintText: 'Try "halal food" or "most popular"',
-            hintStyle: TextStyle(
-              color: Color.fromARGB(255, 149, 149, 149),
-              fontSize: 12,
-              fontStyle: FontStyle.italic,
-            ),
-            border: InputBorder.none,
+    return ListTile(
+      title: TextField(
+        decoration: const InputDecoration(
+          hintText: 'Try "halal food" or "most popular"',
+          hintStyle: TextStyle(
+            color: Color.fromARGB(255, 149, 149, 149),
+            fontSize: 12,
+            fontStyle: FontStyle.italic,
           ),
-          style: TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SearchPage()),
-            );
-          },
+          border: InputBorder.none,
         ),
+        style: const TextStyle(
+          color: Color.fromARGB(255, 0, 0, 0),
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const search.SearchPage()),
+          );
+        },
       ),
     );
   }
@@ -179,59 +178,4 @@ Widget categoryWidget(IconData icon, String text, BuildContext context) {
           ],
         )),
   );
-}
-
-// await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-// );
-
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
-
-  @override
-  State<SearchPage> createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  List<String> listItems = [
-    "Alice",
-    "Bob",
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Icon(Icons.arrow_back))),
-          Container(
-            child: Autocomplete<String>(
-              optionsBuilder: ((textEditingValue) {
-                if (textEditingValue.text == "") {
-                  return const Iterable<String>.empty();
-                }
-
-                return listItems.where((item) {
-                  return item.contains(textEditingValue.text.toLowerCase());
-                });
-              }),
-              onSelected: (item) {
-                print('The $item was selected!');
-              },
-            ),
-          ),
-          Text("Placeholder"),
-        ],
-      ),
-    );
-  }
 }
