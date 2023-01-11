@@ -181,58 +181,6 @@ Widget categoryWidget(IconData icon, String text, BuildContext context) {
   );
 }
 
-// Stateful map page
-class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.filter});
-  final String filter;
-
-  @override
-  State<MapPage> createState() => _MyWidgetState(filter: filter);
-}
-
-class _MyWidgetState extends State<MapPage> {
-  _MyWidgetState({required this.filter});
-  final String filter;
-  final Map<String, Marker> _markers = {};
-  String search = "";
-
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    final googleOffices = await locations.getGoogleOffices();
-    setState(() {
-      _markers.clear();
-      for (final office in googleOffices.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-        );
-        _markers[office.name] = marker;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(filter),
-        backgroundColor: Colors.green[700],
-      ),
-      body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          markers: _markers.values.toSet(),
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(0, 0),
-            zoom: 2,
-          )),
-    );
-  }
-}
-
 // await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
 // );
