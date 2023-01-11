@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'locations.dart' as locations;
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'map.dart' as maps;
+//import 'package:firebase_core/firebase_core.dart';
+//import 'firebase_options.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,16 +25,16 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
           appBar: AppBar(
             centerTitle: false,
-            title: const Text('MyUmmah'),
+            title: const Text('Ummah2U'),
             backgroundColor: Colors.green[700],
             actions: [
               Text(city),
-              Icon(Icons.location_on),
+              const Icon(Icons.location_on),
             ],
           ),
-          body: HomePage(),
+          body: const HomePage(),
           bottomNavigationBar: BottomNavigationBar(
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.search),
                 label: "Search",
@@ -55,14 +55,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-      children: [
-        const ImageSection(),
-        const SearchBar(),
-        const CategoriesSection(),
+    return Column(
+      children: const [
+        ImageSection(),
+        SearchBar(),
+        CategoriesSection(),
       ],
-    ));
+    );
   }
 }
 
@@ -72,29 +71,27 @@ class ImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-          child: ListView(
-        shrinkWrap: true,
-        children: [
-          SizedBox(
-            height: 200.0,
-            width: double.infinity,
-            child: Carousel(
-              dotSize: 6.0,
-              dotSpacing: 15.0,
-              dotPosition: DotPosition.bottomCenter,
-              images: [
-                Image.asset('assets/images/masjid.jpeg', fit: BoxFit.cover),
-                Image.asset('assets/images/food.jpeg', fit: BoxFit.cover),
-                Image.asset('assets/images/masjid.jpeg', fit: BoxFit.cover),
-                Image.asset('assets/images/masjid.jpeg', fit: BoxFit.cover),
-              ],
-            ),
-          )
-        ],
-      )),
-    );
+    return Center(
+        child: ListView(
+      shrinkWrap: true,
+      children: [
+        SizedBox(
+          height: 200.0,
+          width: double.infinity,
+          child: Carousel(
+            dotSize: 6.0,
+            dotSpacing: 15.0,
+            dotPosition: DotPosition.bottomCenter,
+            images: [
+              Image.asset('assets/images/masjid.jpeg', fit: BoxFit.cover),
+              Image.asset('assets/images/food.jpeg', fit: BoxFit.cover),
+              Image.asset('assets/images/masjid.jpeg', fit: BoxFit.cover),
+              Image.asset('assets/images/masjid.jpeg', fit: BoxFit.cover),
+            ],
+          ),
+        )
+      ],
+    ));
   }
 }
 
@@ -105,21 +102,19 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const ListTile(
-        title: TextField(
-          decoration: InputDecoration(
-            hintText: 'Try "halal food" or "most popular"',
-            hintStyle: TextStyle(
-              color: Color.fromARGB(255, 149, 149, 149),
-              fontSize: 12,
-              fontStyle: FontStyle.italic,
-            ),
-            border: InputBorder.none,
+    return const ListTile(
+      title: TextField(
+        decoration: InputDecoration(
+          hintText: 'Try "halal food" or "most popular"',
+          hintStyle: TextStyle(
+            color: Color.fromARGB(255, 149, 149, 149),
+            fontSize: 12,
+            fontStyle: FontStyle.italic,
           ),
-          style: TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
-          ),
+          border: InputBorder.none,
+        ),
+        style: TextStyle(
+          color: Color.fromARGB(255, 0, 0, 0),
         ),
       ),
     );
@@ -133,7 +128,7 @@ class CategoriesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       primary: false,
       padding: const EdgeInsets.all(15),
@@ -156,12 +151,12 @@ class CategoriesSection extends StatelessWidget {
 Widget categoryWidget(IconData icon, String text, BuildContext context) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      primary: Colors.green,
+      backgroundColor: Colors.green,
     ),
     onPressed: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MapPage(filter: text)),
+        MaterialPageRoute(builder: (context) => maps.MapPage(filter: text)),
       );
     },
     child: Container(
@@ -177,57 +172,3 @@ Widget categoryWidget(IconData icon, String text, BuildContext context) {
         )),
   );
 }
-
-// Stateful map page
-class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.filter});
-  final String filter;
-
-  @override
-  State<MapPage> createState() => _MyWidgetState(filter: filter);
-}
-
-class _MyWidgetState extends State<MapPage> {
-  _MyWidgetState({required this.filter});
-  final String filter;
-  final Map<String, Marker> _markers = {};
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    final googleOffices = await locations.getGoogleOffices();
-    setState(() {
-      _markers.clear();
-      for (final office in googleOffices.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-        );
-        _markers[office.name] = marker;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(filter),
-        backgroundColor: Colors.green[700],
-      ),
-      body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          markers: _markers.values.toSet(),
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(0, 0),
-            zoom: 2,
-          )),
-    );
-  }
-}
-
-// await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-// );
