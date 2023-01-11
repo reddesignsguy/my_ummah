@@ -102,19 +102,27 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      title: TextField(
-        decoration: InputDecoration(
-          hintText: 'Try "halal food" or "most popular"',
-          hintStyle: TextStyle(
-            color: Color.fromARGB(255, 149, 149, 149),
-            fontSize: 12,
-            fontStyle: FontStyle.italic,
+    return Container(
+      child: ListTile(
+        title: TextField(
+          decoration: InputDecoration(
+            hintText: 'Try "halal food" or "most popular"',
+            hintStyle: TextStyle(
+              color: Color.fromARGB(255, 149, 149, 149),
+              fontSize: 12,
+              fontStyle: FontStyle.italic,
+            ),
+            border: InputBorder.none,
           ),
-          border: InputBorder.none,
-        ),
-        style: TextStyle(
-          color: Color.fromARGB(255, 0, 0, 0),
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchPage()),
+            );
+          },
         ),
       ),
     );
@@ -171,4 +179,111 @@ Widget categoryWidget(IconData icon, String text, BuildContext context) {
           ],
         )),
   );
+}
+
+// Stateful map page
+class MapPage extends StatefulWidget {
+  const MapPage({super.key, required this.filter});
+  final String filter;
+
+  @override
+  State<MapPage> createState() => _MyWidgetState(filter: filter);
+}
+
+class _MyWidgetState extends State<MapPage> {
+  _MyWidgetState({required this.filter});
+  final String filter;
+  final Map<String, Marker> _markers = {};
+  String search = "";
+
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    final googleOffices = await locations.getGoogleOffices();
+    setState(() {
+      _markers.clear();
+      for (final office in googleOffices.offices) {
+        final marker = Marker(
+          markerId: MarkerId(office.name),
+          position: LatLng(office.lat, office.lng),
+          infoWindow: InfoWindow(
+            title: office.name,
+            snippet: office.address,
+          ),
+        );
+        _markers[office.name] = marker;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(filter),
+        backgroundColor: Colors.green[700],
+      ),
+      body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          markers: _markers.values.toSet(),
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(0, 0),
+            zoom: 2,
+          )),
+    );
+  }
+}
+
+// await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+// );
+
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  List<String> listItems = [
+    "Alice",
+    "Bob",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Icon(Icons.arrow_back))),
+          Container(
+            child: Autocomplete<String>(
+              optionsBuilder: ((textEditingValue) {
+                if (textEditingValue.text == "") {
+                  return const Iterable<String>.empty();
+                }
+
+                return listItems.where((item) {
+                  return item.contains(textEditingValue.text.toLowerCase());
+                });
+              }),
+              onSelected: (item) {
+                print('The $item was selected!');
+              },
+            ),
+          ),
+          Text("Placeholder"),
+        ],
+      ),
+    );
+  }
 }
