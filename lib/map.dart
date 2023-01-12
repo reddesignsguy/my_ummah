@@ -12,6 +12,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MapPage> {
+  //OverlayEntry? entry;
   _MyWidgetState({required this.filter});
   final String filter;
   final Map<String, Marker> _markers = {};
@@ -27,6 +28,9 @@ class _MyWidgetState extends State<MapPage> {
             title: office.name,
             snippet: office.address,
           ),
+          // onTap: () {
+          //   showOverlay();
+          // },
         );
         _markers[office.name] = marker;
       }
@@ -50,4 +54,25 @@ class _MyWidgetState extends State<MapPage> {
           )),
     );
   }
+
+  // showOverlay() {
+  //   entry = OverlayEntry(
+  //       builder: (context) => Positioned(
+  //           left: 20,
+  //           top: 40, //MediaQuery.of(context).size.height - 100,
+  //           child: SizedBox(
+  //             height: 70,
+  //             width: 200,
+  //             child: ElevatedButton.icon(
+  //               style: const ButtonStyle(
+  //                 backgroundColor: MaterialStatePropertyAll(Colors.green),
+  //               ),
+  //               icon: const Icon(Icons.abc),
+  //               onPressed: () {},
+  //               label: const Text('amogus'),
+  //             ),
+  //           )));
+  //   final overlay = Overlay.of(context)!;
+  //   overlay.insert(entry!);
+  // }
 }
