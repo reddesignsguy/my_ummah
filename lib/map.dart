@@ -8,12 +8,12 @@ class MapPage extends StatefulWidget {
   final String filter;
 
   @override
-  State<MapPage> createState() => _MyWidgetState(filter: filter);
+  State<MapPage> createState() => MapWidget(filter: filter);
 }
 
-class _MyWidgetState extends State<MapPage> {
-  //OverlayEntry? entry;
-  _MyWidgetState({required this.filter});
+class MapWidget extends State<MapPage> {
+  OverlayEntry? entry;
+  MapWidget({required this.filter});
   final String filter;
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
@@ -28,9 +28,9 @@ class _MyWidgetState extends State<MapPage> {
             title: office.name,
             snippet: office.address,
           ),
-          // onTap: () {
-          //   showOverlay();
-          // },
+          onTap: () {
+            showOverlay();
+          },
         );
         _markers[office.name] = marker;
       }
@@ -46,33 +46,42 @@ class _MyWidgetState extends State<MapPage> {
         backgroundColor: Colors.green[700],
       ),
       body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          markers: _markers.values.toSet(),
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(0, 0),
-            zoom: 2,
-          )),
+        onMapCreated: _onMapCreated,
+        markers: _markers.values.toSet(),
+        initialCameraPosition: const CameraPosition(
+          target: LatLng(0, 0),
+          zoom: 2,
+        ),
+        onTap: (argument) {
+          hideOverlay();
+        },
+      ),
     );
   }
 
-  // showOverlay() {
-  //   entry = OverlayEntry(
-  //       builder: (context) => Positioned(
-  //           left: 20,
-  //           top: 40, //MediaQuery.of(context).size.height - 100,
-  //           child: SizedBox(
-  //             height: 70,
-  //             width: 200,
-  //             child: ElevatedButton.icon(
-  //               style: const ButtonStyle(
-  //                 backgroundColor: MaterialStatePropertyAll(Colors.green),
-  //               ),
-  //               icon: const Icon(Icons.abc),
-  //               onPressed: () {},
-  //               label: const Text('amogus'),
-  //             ),
-  //           )));
-  //   final overlay = Overlay.of(context)!;
-  //   overlay.insert(entry!);
-  // }
+  showOverlay() {
+    entry = OverlayEntry(
+        builder: (context) => Positioned(
+            left: 20,
+            top: MediaQuery.of(context).size.height - 100,
+            child: SizedBox(
+              height: 70,
+              width: 200,
+              child: ElevatedButton.icon(
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.green),
+                ),
+                icon: const Icon(Icons.abc),
+                onPressed: () {},
+                label: const Text('amogus'),
+              ),
+            )));
+    final overlay = Overlay.of(context)!;
+    overlay.insert(entry!);
+  }
+
+  hideOverlay() {
+    entry?.remove();
+    entry = null;
+  }
 }
