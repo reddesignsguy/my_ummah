@@ -8,13 +8,11 @@ class MapPage extends StatefulWidget {
   final String filter;
 
   @override
-  State<MapPage> createState() => MapWidget(filter: filter);
+  State<MapPage> createState() => MapWidget();
 }
 
 class MapWidget extends State<MapPage> {
   OverlayEntry? entry;
-  MapWidget({required this.filter});
-  final String filter;
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
@@ -42,7 +40,7 @@ class MapWidget extends State<MapPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(filter),
+        title: Text(widget.filter),
         backgroundColor: Colors.green[700],
       ),
       body: GoogleMap(
