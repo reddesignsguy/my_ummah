@@ -16,29 +16,39 @@ class MapWidget extends State<MapPage> {
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
-    setState(() {
-      _markers.clear();
-      for (final office in googleOffices.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-          onTap: () {
-            showOverlay();
-          },
-        );
-        _markers[office.name] = marker;
-      }
-    });
+    setState(
+      () {
+        _markers.clear();
+        for (final office in googleOffices.offices) {
+          final marker = Marker(
+            markerId: MarkerId(office.name),
+            position: LatLng(office.lat, office.lng),
+            infoWindow: InfoWindow(
+              title: office.name,
+              snippet: office.address,
+            ),
+            onTap: () {
+              //When pressing on a marker
+              hideOverlay(); //Clear any previous buttons that were still on screen
+              showOverlay(office.name, office.address); //Then draw a new button
+            },
+          );
+          _markers[office.name] = marker;
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            hideOverlay();
+            Navigator.maybePop(context);
+          },
+        ),
         centerTitle: true,
         title: Text(widget.filter),
         backgroundColor: Colors.green[700],
@@ -57,23 +67,30 @@ class MapWidget extends State<MapPage> {
     );
   }
 
-  showOverlay() {
+  showOverlay(String name, String address) {
     entry = OverlayEntry(
-        builder: (context) => Positioned(
-            left: 20,
-            top: MediaQuery.of(context).size.height - 100,
-            child: SizedBox(
-              height: 70,
-              width: 200,
-              child: ElevatedButton.icon(
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.green),
-                ),
-                icon: const Icon(Icons.abc),
-                onPressed: () {},
-                label: const Text('amogus'),
+      builder: (context) => Positioned(
+        left: 20,
+        top: MediaQuery.of(context).size.height - 200,
+        child: SizedBox(
+          height: 120,
+          width: 300,
+          child: ElevatedButton.icon(
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.black),
+            ),
+            icon: const Icon(Icons.abc),
+            onPressed: () {},
+            label: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Column(
+                children: [Text(name), Text(address)],
               ),
-            )));
+            ),
+          ),
+        ),
+      ),
+    );
     final overlay = Overlay.of(context)!;
     overlay.insert(entry!);
   }
