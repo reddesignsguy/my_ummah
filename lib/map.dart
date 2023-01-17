@@ -23,10 +23,7 @@ class MapWidget extends State<MapPage> {
           final marker = Marker(
             markerId: MarkerId(office.name),
             position: LatLng(office.lat, office.lng),
-            infoWindow: InfoWindow(
-              title: office.name,
-              snippet: office.address,
-            ),
+            infoWindow: InfoWindow(title: office.name),
             onTap: () {
               //When pressing on a marker
               hideOverlay(); //Clear any previous buttons that were still on screen
@@ -68,24 +65,56 @@ class MapWidget extends State<MapPage> {
   }
 
   showOverlay(String name, String address) {
+    double buttonLeftSpacing = 20;
     entry = OverlayEntry(
       builder: (context) => Positioned(
-        left: 20,
-        top: MediaQuery.of(context).size.height - 200,
+        left: buttonLeftSpacing,
+        top: MediaQuery.of(context).size.height - 220,
         child: SizedBox(
           height: 120,
-          width: 300,
-          child: ElevatedButton.icon(
+          width: MediaQuery.of(context).size.width - (buttonLeftSpacing * 2),
+          child: ElevatedButton(
             style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.black),
+              backgroundColor: MaterialStatePropertyAll(Colors.white),
+              overlayColor: MaterialStatePropertyAll(Colors.green),
             ),
-            icon: const Icon(Icons.abc),
             onPressed: () {},
-            label: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Column(
-                children: [Text(name), Text(address)],
-              ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Container(
+                    height: 100.0,
+                    width: 100.0,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/food.jpeg'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Container(
+                      alignment: const AlignmentDirectional(0, 150),
+                      child: Column(
+                        children: [
+                          Text(
+                            name,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                          Text(
+                            address,
+                            style: const TextStyle(color: Colors.grey),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
