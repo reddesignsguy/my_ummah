@@ -6,6 +6,7 @@ import 'package:places_service/places_service.dart';
 import 'package:http/http.dart';
 import 'components/network_utility.dart';
 import 'components/location_list_tile.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

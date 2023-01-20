@@ -27,7 +27,8 @@ class MapWidget extends State<MapPage> {
             onTap: () {
               //When pressing on a marker
               hideOverlay(); //Clear any previous buttons that were still on screen
-              showOverlay(office.name, office.address); //Then draw a new button
+              showOverlay(
+                  office.name, office.address); // Then draw a new button
             },
           );
           _markers[office.name] = marker;
