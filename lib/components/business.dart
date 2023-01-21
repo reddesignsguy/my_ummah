@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-import 'package:Ummah2U/components/location.dart';
+import 'package:my_ummah/components/location.dart';
 
 class Business {
   String name;
