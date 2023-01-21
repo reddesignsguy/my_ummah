@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'map.dart' as maps;
 import 'searchPage.dart' as search;
-//import 'package:firebase_core/firebase_core.dart';
-//import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+//void main() {
   runApp(const MyApp());
 }
 
@@ -146,7 +151,7 @@ class CategoriesSection extends StatelessWidget {
         categoryWidget(Icons.mosque, "Masjids", context),
         categoryWidget(Icons.restaurant, "Restaurants", context),
         categoryWidget(Icons.medical_services, "Doctors", context),
-        categoryWidget(Icons.store, "Stores", context),
+        categoryWidget(Icons.store, "Groceries", context),
         categoryWidget(Icons.people, "All", context),
       ],
     );

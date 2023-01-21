@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.my_ummah">
+    <!--<uses-permission android:name="android.permission.INTERNET" />newthing-->
    <application
         android:label="my_ummah"
         android:name="${applicationName}"

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:my_ummah/models/autocomplate_prediction.dart';
-import 'package:my_ummah/models/place_auto_complate_response.dart';
+import 'package:Ummah2U/models/autocomplate_prediction.dart';
+import 'package:Ummah2U/models/place_auto_complate_response.dart';
 import 'package:places_service/places_service.dart';
 import 'package:http/http.dart';
 import 'components/network_utility.dart';

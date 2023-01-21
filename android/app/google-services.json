@@ -29,6 +29,13 @@
             {
               "client_id": "369580567004-kno4k2vo2pkiuaktahp0pa2rs6u1b7bm.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "369580567004-4n09j0lk20pq6q28kvd6c6m9rhia660i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myUmmah"
+              }
             }
           ]
         }
