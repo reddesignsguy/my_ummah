@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class LocationListTile extends StatelessWidget {
   const LocationListTile({
     Key? key,
+    required this.name,
     required this.location,
     required this.press,
   }) : super(key: key);
 
+  final String name;
   final String location;
   final VoidCallback press;
 
@@ -18,8 +20,13 @@ class LocationListTile extends StatelessWidget {
           onTap: press,
           horizontalTitleGap: 0,
           title: Text(
-            location,
+            name,
             maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            location,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
         ),
