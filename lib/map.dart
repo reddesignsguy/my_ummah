@@ -16,7 +16,7 @@ class MapWidget extends State<MapPage> {
   OverlayEntry? entry;
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    //final googleOffices = await locations.getGoogleOffices();
+    final googleOffices = await locations.getGoogleOffices();
     final muslimBusinesses = await getBusinesses();
     print("Creating markers for " +
         muslimBusinesses.length.toString() +
@@ -25,11 +25,10 @@ class MapWidget extends State<MapPage> {
       () {
         _markers.clear();
         for (final business in muslimBusinesses) {
-          print("Creating marker for " + business.name);
           final marker = Marker(
             markerId: MarkerId(business.name),
-            position:
-                LatLng(business.location.latitude, business.location.longitude),
+            position: LatLng(business.location.latitude.toDouble(),
+                business.location.longitude.toDouble()),
             infoWindow: InfoWindow(title: business.name),
             onTap: () {
               //When pressing on a marker
@@ -39,6 +38,7 @@ class MapWidget extends State<MapPage> {
             },
           );
           _markers[business.name] = marker;
+          print("Created marker for " + business.name);
         }
       },
     );

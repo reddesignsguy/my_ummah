@@ -27,7 +27,7 @@ Future<List<Business>> getBusinesses() async {
       //create a business object and store a reference to it in retval
       retval.add(Business(
           doc.data()["name"],
-          Location(doc.data()["_geoloc"]["lat"], doc.data()["_geoloc"]["long"]),
+          Location(doc.data()["_geoloc"]["lat"], doc.data()["_geoloc"]["lng"]),
           doc.data()["phoneNo"],
           doc.data()["email"],
           doc.data()["rating"],
