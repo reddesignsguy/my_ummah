@@ -1,6 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'locations.dart' as locations;
 import 'package:flutter/material.dart';
+import './components/business.dart';
 
 // Stateful map page
 class MapPage extends StatefulWidget {
@@ -15,23 +16,24 @@ class MapWidget extends State<MapPage> {
   OverlayEntry? entry;
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final googleOffices = await locations.getGoogleOffices();
+    final muslimBusinesses = await getBusinesses();
     setState(
       () {
         _markers.clear();
-        for (final office in googleOffices.offices) {
+        for (final business in muslimBusinesses) {
           final marker = Marker(
-            markerId: MarkerId(office.name),
-            position: LatLng(office.lat, office.lng),
-            infoWindow: InfoWindow(title: office.name),
+            markerId: MarkerId(business.name),
+            position: LatLng(business.location.latitude.toDouble(),
+                business.location.longitude.toDouble()),
+            infoWindow: InfoWindow(title: business.name),
             onTap: () {
               //When pressing on a marker
               hideOverlay(); //Clear any previous buttons that were still on screen
-              showOverlay(
-                  office.name, office.address); // Then draw a new button
+              showOverlay(business.name,
+                  business.location.address); // Then draw a new button
             },
           );
-          _markers[office.name] = marker;
+          _markers[business.name] = marker;
         }
       },
     );
@@ -55,7 +57,7 @@ class MapWidget extends State<MapPage> {
         onMapCreated: _onMapCreated,
         markers: _markers.values.toSet(),
         initialCameraPosition: const CameraPosition(
-          target: LatLng(0, 0),
+          target: LatLng(0, -100),
           zoom: 2,
         ),
         onTap: (argument) {

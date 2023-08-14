@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 class Location {
-  String? address;
+  String address;
   String? city;
   String? postalCode;
   String? country;
@@ -9,5 +9,5 @@ class Location {
   double longitude;
   String? type;
 
-  Location(this.latitude, this.longitude);
+  Location(this.latitude, this.longitude, this.address);
 }
