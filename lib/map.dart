@@ -121,7 +121,7 @@ class MapWidget extends State<MapPage> {
         ),
       ),
     );
-    final overlay = Overlay.of(context)!;
+    final overlay = Overlay.of(context);
     overlay.insert(entry!);
   }
 
