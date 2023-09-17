@@ -33,13 +33,15 @@ class Business {
 
 Future<List<Business>> getBusinesses() async {
   List<Business> retval = [];
+  print("Reading from DB");
   var db = FirebaseFirestore.instance;
   await db.collection("businesses").get().then((event) async {
     for (var doc in event.docs) {
       //create a business object and store a reference to it in retval
       retval.add(Business(
           doc.data()["name"],
-          Location(doc.data()["_geoloc"]["lat"], doc.data()["_geoloc"]["lng"]),
+          Location(doc.data()["_geoloc"]["lat"], doc.data()["_geoloc"]["lng"],
+              doc.data()["address"]),
           doc.data()["phoneNo"],
           doc.data()["email"],
           doc.data()["rating"],
@@ -53,6 +55,7 @@ Future<List<Business>> getBusinesses() async {
 
 //take a list of businesses and write them to a json file
 Future<void> writeBusinesses(List<Business> businesses) async {
+  print("Attempting file write");
   final directory = await getApplicationDocumentsDirectory();
   String path = "${directory.path}\\assets\\businesses.json";
   for (var business in businesses) {
